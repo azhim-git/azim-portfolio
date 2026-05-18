@@ -162,7 +162,7 @@ iframe {
 
 .hero-grid {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr; /* Balanced split to prevent squishing */
+    grid-template-columns: 1.2fr 0.8fr; /* Balanced track split */
     gap: 5vw;
     align-items: center;
     width: 100%;
@@ -172,7 +172,7 @@ iframe {
     display: flex;
     flex-direction: column;
     gap: 3.5rem;
-    min-width: 0; /* Prevents text overflow from expanding the column and squishing the image */
+    min-width: 0; /* Prevents overflow from pushing grid columns */
 }
 
 .category-tag {
@@ -187,12 +187,13 @@ iframe {
 
 .huge-title {
     font-family: var(--font-heading);
-    font-size: clamp(2.5rem, 5.2vw, 4.8rem); /* Scaled down slightly to fit beautifully next to the hero image on standard laptops */
+    font-size: clamp(2.5rem, 4.8vw, 4.5rem); /* Fine-tuned scale to prevent overlap on 13" laptop screens */
     font-weight: 800;
     line-height: 0.95;
     letter-spacing: -0.04em;
     text-transform: uppercase;
     color: var(--text-main);
+    white-space: normal;
 }
 
 .hero-meta {
@@ -231,16 +232,18 @@ iframe {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    min-width: 0;
 }
 
 .hero-photo-frame {
     width: 100%;
-    max-width: 440px;
+    max-width: 360px; /* Reduced slightly from 440px to completely avoid overlapping */
     aspect-ratio: 3 / 4;
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 0 30px 70px rgba(0, 0, 0, 0.08);
     border: 1px solid rgba(0, 0, 0, 0.03);
+    margin-left: auto;
 }
 
 .hero-photo-frame img {
@@ -322,7 +325,9 @@ iframe {
     font-size: 0.95rem;
 }
 
-/* Instagram Reels Section */
+/* =========================================
+   Clean Custom Instagram Reels
+   ========================================= */
 .reels-section {
     margin-top: 80px;
 }
@@ -340,6 +345,8 @@ iframe {
     border: 1px solid var(--border-color);
     box-shadow: 0 10px 35px rgba(0,0,0,0.02);
     transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo), border-color 0.4s;
+    display: flex;
+    flex-direction: column;
 }
 
 .reel-card:hover {
@@ -348,17 +355,64 @@ iframe {
     border-color: var(--border-hover);
 }
 
+/* Custom Header on Reel Card */
+.reel-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.1rem 1.25rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.reel-creator {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.reel-insta-icon {
+    width: 18px;
+    height: 18px;
+    fill: var(--text-main);
+}
+
+.reel-acc-name {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.reel-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 8px;
+    background-color: var(--bg-sec);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    color: var(--text-muted);
+}
+
+/* CSS Cropping container to hide Instagram iframe UI controls */
 .reel-iframe-wrapper {
     position: relative;
     width: 100%;
-    height: 580px; /* Perfect standardized height for vertical Reels embeds */
+    height: 480px; /* Perfect height to crop out bottom interaction bar */
+    overflow: hidden;
     background-color: #f7f7f9;
 }
 
 .reel-iframe-wrapper iframe {
-    border: none;
+    position: absolute;
+    top: -54px; /* Perfectly offsets to crop the default top header */
+    left: 0;
     width: 100%;
-    height: 100%;
+    height: 610px; /* Forces height overflow so bottom elements are completely masked */
+    border: none;
+    pointer-events: auto;
 }
 
 /* =========================================
@@ -528,7 +582,6 @@ iframe {
     }
     
     .huge-title {
-        /* Extremely precise size constraint to fit the 10-letter word ASHADULLAH on narrow mobile devices! */
         font-size: clamp(2rem, 7.8vw, 3.2rem); 
         letter-spacing: -0.03em;
         line-height: 1.0;
@@ -545,7 +598,7 @@ iframe {
     }
     
     .reel-iframe-wrapper {
-        height: 520px; /* Slightly shorter on mobile */
+        height: 480px; /* Retain perfect crop height on mobile */
     }
     
     .spotlight-meta {
