@@ -286,7 +286,6 @@ iframe {
 /* YouTube Spotlight */
 .spotlight-container {
     margin-bottom: 120px;
-    cursor: pointer;
 }
 
 .youtube-wrapper {
@@ -306,65 +305,6 @@ iframe {
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Clicking wrapper opens full screen modal */
-}
-
-/* Cinematic Play Button Overlay on YouTube Spotlight */
-.youtube-play-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.15);
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    color: #ffffff;
-    opacity: 0;
-    transition: opacity 0.4s var(--ease-out-expo), background-color 0.4s;
-}
-
-.youtube-wrapper:hover .youtube-play-overlay {
-    opacity: 1;
-    background-color: rgba(0, 0, 0, 0.35);
-}
-
-.play-icon-svg {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.95);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    transform: scale(0.9);
-    transition: transform 0.4s var(--ease-out-expo), background-color 0.4s;
-}
-
-.play-icon-svg svg {
-    width: 28px;
-    height: 28px;
-    fill: #000000;
-    margin-left: 4px;
-}
-
-.youtube-wrapper:hover .play-icon-svg {
-    transform: scale(1);
-    background-color: #ffffff;
-}
-
-.youtube-play-overlay span {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .spotlight-meta {
@@ -386,7 +326,7 @@ iframe {
 }
 
 /* =========================================
-   Interactive Instagram Reels (Custom Overlay / Modal Trigger)
+   Clean Custom Instagram Reels
    ========================================= */
 .reels-section {
     margin-top: 80px;
@@ -406,7 +346,6 @@ iframe {
     border: 1px solid var(--border-color);
     box-shadow: 0 10px 35px rgba(0,0,0,0.02);
     transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo), border-color 0.4s;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
 }
@@ -417,181 +356,39 @@ iframe {
     border-color: var(--border-hover);
 }
 
-/* Premium Badge Overlays positioned EXACTLY over the default "View Profile" blue button inside the iframe! */
-.reel-badge-overlay {
+/* 
+   Invisible Overlay Mask:
+   Perfectly covers the blue "View profile" button on the top right
+   without blocking the dynamic account avatar and creator handles!
+*/
+.view-profile-mask {
     position: absolute;
     top: 12px;
     right: 12px;
-    z-index: 15;
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 5px 11px;
-    background-color: #ffffff; /* Perfectly masks the white background of the iframe header */
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    color: var(--text-muted);
-    pointer-events: none; /* Let click go directly to the parent reel-card */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    width: 104px; /* Perfect width matching the blue instagram button */
+    height: 38px;  /* Perfect height to seamlessly cover the button */
+    background-color: #ffffff; /* Matches the white header container */
+    z-index: 10;
+    pointer-events: auto; /* Blocks clicks on the view profile button */
+    border-radius: 4px;
 }
 
-/* Iframe Wrapper Constrained to Perfectly Hide bottom buttons (Likes/Share/View more) */
+/* CSS Cropping container to hide Instagram iframe UI controls */
 .reel-iframe-wrapper {
     position: relative;
     width: 100%;
-    height: 440px; /* Cropped specifically to hide bottom widgets */
+    height: 440px; /* Perfect height to crop out bottom interaction bar */
     overflow: hidden;
-    background-color: #fcfcfd;
-    pointer-events: none; /* Block inner iframe mouse events to trigger parent card modal */
+    background-color: #f7f7f9;
 }
 
 .reel-iframe-wrapper iframe {
     position: absolute;
-    top: 0; /* Keep top at 0 so dynamic real DP, real name, and Instagram icon show beautifully */
+    top: 0; 
     left: 0;
     width: 100%;
-    height: 520px; /* Excess height elements are completely hidden by outer wrapper overflow mask */
+    height: 520px; /* Forces height overflow so bottom elements are completely masked */
     border: none;
-}
-
-/* =========================================
-   Full Screen Lightbox Modal
-   ========================================= */
-.video-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2000;
-    display: none; /* Controlled by JavaScript */
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.96); /* Elegant clean off-white glassmorphism */
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    opacity: 0;
-    transition: opacity 0.5s var(--ease-out-expo);
-}
-
-.video-modal.active .modal-backdrop {
-    opacity: 1;
-}
-
-/* Rounded Minimal Close Button */
-.modal-close-btn {
-    position: absolute;
-    top: 2rem;
-    right: 2.5rem;
-    font-size: 1.5rem;
-    font-weight: 300;
-    cursor: pointer;
-    z-index: 2010;
-    width: 54px;
-    height: 54px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: 1px solid var(--border-color);
-    background-color: #ffffff;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-    transition: transform 0.4s var(--ease-out-expo), background-color 0.4s, border-color 0.4s;
-}
-
-.modal-close-btn:hover {
-    transform: rotate(90deg) scale(1.05);
-    background-color: var(--bg-sec);
-    border-color: var(--border-hover);
-}
-
-.modal-content {
-    position: relative;
-    z-index: 2005;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    width: 90%;
-    max-width: 420px; /* Cinematic phone view aspect size for Reels */
-    transform: translateY(40px) scale(0.95);
-    opacity: 0;
-    transition: transform 0.6s var(--ease-out-expo), opacity 0.6s var(--ease-out-expo);
-}
-
-.video-modal.active .modal-content {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-}
-
-/* Widescreen YouTube layout */
-.modal-content.wide {
-    max-width: 960px;
-}
-
-.modal-video-container {
-    width: 100%;
-    aspect-ratio: 9 / 16; /* Standard Reel layout aspect ratio */
-    background-color: #000000;
-    border-radius: 28px;
-    overflow: hidden;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
-    border: 1px solid var(--border-color);
-}
-
-.modal-content.wide .modal-video-container {
-    aspect-ratio: 16 / 9; /* Cinematic landscape landscape */
-}
-
-/* Interactive Footer Link below Player */
-.modal-footer {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    opacity: 0;
-    transform: translateY(15px);
-    transition: opacity 0.5s var(--ease-out-expo) 0.2s, transform 0.5s var(--ease-out-expo) 0.2s;
-}
-
-.video-modal.active .modal-footer {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.modal-insta-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 2.25rem;
-    background-color: var(--text-main);
-    color: var(--bg-main);
-    border-radius: 100px;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: -0.01em;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    transition: transform 0.4s var(--ease-out-expo), background-color 0.4s;
-}
-
-.modal-insta-cta:hover {
-    transform: scale(1.03);
-    background-color: #2b2b2f;
-}
-
-.modal-insta-svg {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
 }
 
 /* =========================================
@@ -793,19 +590,5 @@ iframe {
     
     .separator {
         display: none;
-    }
-    
-    /* Responsive Lightbox for mobile */
-    .modal-close-btn {
-        top: 1rem;
-        right: 1rem;
-        width: 48px;
-        height: 48px;
-    }
-    
-    .modal-content {
-        max-width: 100%;
-        width: 95%;
-        gap: 1rem;
     }
 }
