@@ -149,22 +149,29 @@ iframe {
 }
 
 /* =========================================
-   Hero Section (Pure White Editorial)
+   Hero Section (Split Grid Layout)
    ========================================= */
 .hero {
-    min-height: 80vh;
+    min-height: 90vh;
     display: flex;
     align-items: center;
     padding-top: 140px;
-    padding-bottom: 60px;
-    background: radial-gradient(circle at 80% 20%, #f7f7f9 0%, #ffffff 60%);
+    padding-bottom: 80px;
+    background: radial-gradient(circle at 10% 20%, #ffffff 0%, #fbfbfb 90%);
 }
 
-.hero-content {
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 5vw;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-text-content {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
-    width: 100%;
+    gap: 3.5rem;
 }
 
 .category-tag {
@@ -179,7 +186,7 @@ iframe {
 
 .huge-title {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 9vw, 6.5rem);
+    font-size: clamp(3rem, 7.5vw, 5.8rem); /* Slightly tighter desk size to avoid overflow on mid screen */
     font-weight: 800;
     line-height: 0.95;
     letter-spacing: -0.04em;
@@ -189,8 +196,8 @@ iframe {
 
 .hero-meta {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr); /* 2x2 grid for 4 items */
+    gap: 2rem 3rem;
     border-top: 1px solid var(--border-color);
     padding-top: 2rem;
 }
@@ -205,8 +212,46 @@ iframe {
 }
 
 .meta-item p {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 500;
+}
+
+.meta-link {
+    transition: color var(--ease-out-expo);
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.meta-link:hover {
+    color: var(--text-muted);
+}
+
+/* Right-side artistic image styling */
+.hero-image-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.hero-photo-frame {
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 3 / 4;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.hero-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.98) saturate(0.95);
+    transition: transform 0.8s var(--ease-out-expo);
+}
+
+.hero-photo-frame:hover img {
+    transform: scale(1.04);
 }
 
 /* =========================================
@@ -393,6 +438,31 @@ iframe {
     letter-spacing: -0.02em;
 }
 
+/* Footer contacts styling */
+.footer-contacts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.footer-link {
+    color: var(--text-main);
+    border-bottom: 1px dashed var(--border-color);
+    transition: color var(--ease-out-expo);
+}
+
+.footer-link:hover {
+    color: var(--text-muted);
+}
+
+.separator {
+    color: var(--border-color);
+}
+
 .copyright {
     color: var(--text-muted);
     font-size: 0.85rem;
@@ -436,6 +506,31 @@ iframe {
     
     .hero {
         padding-top: 110px;
+        padding-bottom: 60px;
+    }
+    
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+    
+    .hero-image-content {
+        justify-content: center;
+        order: -1; /* Puts image above text on mobile */
+    }
+    
+    .hero-photo-frame {
+        max-width: 100%;
+        height: 380px;
+        aspect-ratio: 4 / 3; /* Wider profile landscape ratio for standard mobile headers */
+        border-radius: 20px;
+    }
+    
+    .huge-title {
+        /* Extremely precise size constraint to fit the 10-letter word ASHADULLAH on narrow mobile devices! */
+        font-size: clamp(2rem, 7.8vw, 3.2rem); 
+        letter-spacing: -0.03em;
+        line-height: 1.0;
     }
     
     .hero-meta {
@@ -456,5 +551,14 @@ iframe {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
+    }
+    
+    .footer-contacts {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .separator {
+        display: none;
     }
 }
